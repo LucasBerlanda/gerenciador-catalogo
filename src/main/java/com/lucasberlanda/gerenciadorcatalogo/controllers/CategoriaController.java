@@ -3,6 +3,7 @@ package com.lucasberlanda.gerenciadorcatalogo.controllers;
 import com.lucasberlanda.gerenciadorcatalogo.model.Categoria;
 import com.lucasberlanda.gerenciadorcatalogo.records.CategoriaRecord;
 import com.lucasberlanda.gerenciadorcatalogo.services.CategoriaService;
+import jakarta.websocket.server.PathParam;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/categoria")
+@RequestMapping("/api/categoria")
 @AllArgsConstructor
 public class CategoriaController {
 
@@ -32,14 +33,14 @@ public class CategoriaController {
     }
 
     @PutMapping("/alterar/{id}")
-    public ResponseEntity<Categoria> alterar(@RequestParam Long id, @RequestBody CategoriaRecord record){
+    public ResponseEntity<Categoria> alterar(@PathVariable("id") String id, @RequestBody CategoriaRecord record){
         var categoria = categoriaService.alterar(id, record);
 
         return ResponseEntity.ok().body(categoria);
     }
 
     @DeleteMapping("/remover/{id}")
-    public ResponseEntity<Categoria> remover(@RequestParam Long id){
+    public ResponseEntity<Categoria> remover(@PathVariable("id") String id){
         categoriaService.remover(id);
 
         return ResponseEntity.noContent().build();
